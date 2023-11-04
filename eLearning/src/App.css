@@ -1,0 +1,183 @@
+body, html{
+  padding: 0;
+  background-color: var(--platinum);
+  font-family: 'Maven Pro', sans-serif;
+}
+
+section{
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+form{
+  padding: 30px;
+  width: 100%;
+  margin: 10px auto auto auto;
+  text-align: center;
+  animation: popAnimation;
+  animation-duration: 1s;
+}
+
+.formTitle{
+  display: block;
+  font-size: 55px;
+  margin: 10px 0 50px 0;
+}
+
+.formLabel{
+  display: block;
+}
+
+.formInput{
+  border: solid 1px var(--raisin-black);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-bottom: 30px;
+  outline: none;
+  width: 250px;
+}
+
+.formDontHaveAccountWarning{
+  display: block;
+  margin: 35px 0 0 0;
+  font-size: 15px;
+}
+
+.navbar-brand{
+  width: 60px;
+}
+
+footer{
+  background-color: var(--raisin-black);
+  color: var(--platinum);
+  width: 100%;
+  padding: 20px;
+}
+
+.footerText{
+  display: block;
+  text-align: center;
+}
+
+.indexHeadSection{
+  padding: 80px 0 130px 0;
+  text-align: center;
+}
+
+.indexHeadSection *{
+  animation: popAnimation;
+  animation-duration: 1s;
+}
+
+.indexHeadSection h1{
+  padding: 40px;
+  animation: popAnimation;
+  animation-duration: 1s;
+}
+
+.indexCoursesSection h2{
+  text-align: center;
+  padding: 20px 0 20px 0;
+  animation: popAnimation;
+  animation-duration: 1s;
+}
+
+.indexCoursesSection{
+  padding: 30px 0 100px 0;
+}
+
+.indexCourseExample{
+  border: solid 1px var(--raisin-black);
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  margin: 10px;
+}
+
+.indexCourseExample img{
+  width: 100px;
+  border-radius: 5px;
+}
+
+.getStartedBtn{
+  transition-duration: 0.5s;
+  border: solid 2px var(--bittersweet);
+  border-radius: 7px;
+  background-color: transparent;
+  padding: 10px;
+  color: var(--raisin-black);
+  text-decoration: none;
+}.getStartedBtn:hover{
+  transition-duration: 0.7s;
+  color: #fff;
+  background-color: var(--bittersweet);
+}
+
+.searchBarDiv{
+  text-align: center;
+  padding: 20px 0 100px 0;
+}
+.searchBar{
+  width: 50%;
+  padding: 10px;
+}
+
+.homeHeadSection{
+  text-align: center;
+  padding: 30px 0 200px 0;
+  animation: popAnimation;
+  animation-duration: 1s;
+}
+
+.course{
+  transition-duration: 0.5s;
+  padding: 30px;
+  text-align: center;
+  background-color: var(--raisin-black);
+  color: white;
+  border-radius: 5px;
+  margin: 20px;
+  width: 300px;
+}
+.course:hover{
+  transition-duration: 0.5s;
+  padding: 40px;
+}
+.course .courseTitle,.coursePrice,.courseRating{
+  display: block;
+}
+.course .courseTitle{
+  font-size: 25px;
+  padding: 10px;
+}
+.course .coursePrice{
+  font-size: 20px;
+}
+.course .courseRating{
+  color: var(--saffron);
+}
+.course .courseImage{
+  width: 75%;
+  height: 200px;
+  border-radius: 5px;
+}
+
+.courseOverviewSection{
+  padding: 60px 40px;
+}
+
+
+
+@keyframes popAnimation{
+  from{opacity: 0%; height: 20px;}
+  to{opacity: 100%; height: 100%;}
+}
+
+
+
+:root{
+  --raisin-black: #232020ff;
+  --platinum: #d8dbe2ff;
+  --bittersweet: #ee6055ff;
+  --saffron: #f8c630ff;
+}
