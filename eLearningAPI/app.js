@@ -57,7 +57,7 @@ app.post("/register", (req, res) => {
         var password=bcrypt.hashSync(req.body.password, 13)
         var type=req.body.role
         var token = md5(String(Math.random()*10)+String(Math.random()*10))
-        var user = new User({fullname, email, password, type, boughtCoursesId: [], token, profileUrl: "/profile/1.svg"})
+        var user = new User({fullname, email, password, type, boughtCoursesId: [], token, profileUrl: "/profiles/1.svg"})
         user.save().then(() => {
             res.send(JSON.stringify({error: false, data: token}))
         })

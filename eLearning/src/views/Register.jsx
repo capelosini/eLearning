@@ -1,12 +1,19 @@
-import Navbar from '../components/navbar'
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 import swal from 'sweetalert'
+import Navbar from '../components/navbar'
 import apiRequests from '../utils/apiRequests'
 import auth from '../utils/auth'
 
 function Register(){
     
     document.querySelector('title').innerText = "Register"
+
+    useEffect(() => {
+        auth().then((res) => {
+            if(res){ window.location.href="/home" }
+        })
+    }, [])
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -31,10 +38,6 @@ function Register(){
             window.location.href="/login"
         }
     }
-
-    auth().then((res) => {
-        if(res){ window.location.href="/home" }
-    })
 
     return (
         <div>

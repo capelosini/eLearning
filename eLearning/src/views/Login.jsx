@@ -1,12 +1,19 @@
-import Navbar from '../components/navbar'
 import { Link } from 'react-router-dom'
-import apiRequests from '../utils/apiRequests'
+import { useEffect } from 'react'
 import swal from 'sweetalert'
+import Navbar from '../components/navbar'
+import apiRequests from '../utils/apiRequests'
 import auth from '../utils/auth'
 
 function Login(){
     
     document.querySelector('title').innerText = "Login"
+
+    useEffect(() => {
+        auth().then((res) => {
+            if(res){ window.location.href="/home" }
+        })
+    }, [])
 
     async function handleSubmit(e){
         e.preventDefault()
