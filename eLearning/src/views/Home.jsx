@@ -7,7 +7,7 @@ function Home(){
 
     document.querySelector('title').innerText = "Home"
 
-    const [user, setUser] = useState({fullname: "", type: "", boughtCoursesId: [], email: "", token: "", profileUrl: ""})
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
         auth().then((res) => {

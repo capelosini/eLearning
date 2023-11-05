@@ -6,7 +6,7 @@ function Course(props){
             <div className='course'>
                 <span className='courseTitle'>{props.title}</span>
                 <img className='courseImage' src={props.img} />
-                <span className='courseRating'>{props.rating}</span>
+                <span className='courseRating'>⭐ {props.rating}</span>
                 <span className='coursePrice'>{props.price}</span>
             </div>
         </Link>

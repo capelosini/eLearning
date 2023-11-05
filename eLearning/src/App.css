@@ -98,6 +98,7 @@ footer{
 .indexCourseExample img{
   width: 100px;
   border-radius: 5px;
+  margin: 15px;
 }
 
 .getStartedBtn{
@@ -137,12 +138,12 @@ footer{
   background-color: var(--raisin-black);
   color: white;
   border-radius: 5px;
-  margin: 20px;
-  width: 300px;
+  width: 350px;
+  margin: 20px auto 20px auto;
 }
 .course:hover{
   transition-duration: 0.5s;
-  padding: 40px;
+  width: 360px;
 }
 .course .courseTitle,.coursePrice,.courseRating{
   display: block;
@@ -153,6 +154,7 @@ footer{
 }
 .course .coursePrice{
   font-size: 20px;
+  padding: 5px;
 }
 .course .courseRating{
   color: var(--saffron);
@@ -161,6 +163,11 @@ footer{
   width: 75%;
   height: 200px;
   border-radius: 5px;
+}
+
+.coursesViewDiv .col{
+  text-align: center;
+  margin: auto;
 }
 
 .courseOverviewSection{

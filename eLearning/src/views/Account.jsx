@@ -27,17 +27,15 @@ function Account(){
 
     async function saveProfile(e){
         var error=false
-        var data=await apiRequests.post("edit/profile", profileUrl).catch(async(err) => {
+        var data=await apiRequests.post("edit/profile", {profileUrl, token: localStorage.getItem("token")}).catch(async(err) => {
             await swal("Error", "Something went Wrong!", "error")
             error=true
         })
         if(error) return
-        var dataJson=JSON.parse(data.data)
-        console.log(data.json())
-        if(dataJson.error) {
-            await swal("Error", "Something went Wrong!", "error")
+        if(data.error) {
+            await swal("Error", data.data, "error")
         } else{
-            swal("Success", "Profile successfully updated!", "success")
+            swal("Success", data.data, "success")
         }
     }
 

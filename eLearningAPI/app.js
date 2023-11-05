@@ -19,9 +19,9 @@ mongoose.connect("mongodb://127.0.0.1/elearning")
 const {User, Course} = require('./models')
 
 function tokenValidation(req, res){
-    const token = req.cookies.token
-    if(!token || User.find({token: token})){
-        res.redirect("/login")
+    const token = req.body.token
+    if(!token || !User.find({token: token})){
+        res.send(JSON.stringify({error: true, data: "Invalid Token!"}))
         return false
     }
     return true
@@ -62,6 +62,20 @@ app.post("/register", (req, res) => {
             res.send(JSON.stringify({error: false, data: token}))
         })
     })
+})
+
+app.post("/edit/profile", (req, res) => {
+    if (tokenValidation(req, res)){
+        if (req.body.profileUrl && String(req.body.profileUrl).startsWith("/profiles/") && String(req.body.profileUrl).endsWith(".svg")){
+            User.findOneAndUpdate({token: req.body.token}, {profileUrl: req.body.profileUrl}, {new: true}).then(r => {
+                res.send(JSON.stringify({error: false, data: "Profile Updated!"}))
+                return
+            })
+        } else{
+            res.send(JSON.stringify({error: true, data: "Invalid Profile URL!"}))
+            return
+        }
+    }
 })
 
 
