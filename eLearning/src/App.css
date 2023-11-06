@@ -139,6 +139,7 @@ footer{
   color: white;
   border-radius: 5px;
   width: 350px;
+  height: auto;
   margin: 20px auto 20px auto;
 }
 .course:hover{

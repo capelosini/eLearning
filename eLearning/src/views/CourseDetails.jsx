@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
 import auth from "../utils/auth"
+import apiRequests from "../utils/apiRequests"
 
 
 function CourseOverview(){
@@ -9,11 +10,15 @@ function CourseOverview(){
     const { courseId } = useParams()
 
     const [user, setUser] = useState(null)
+    const [course, setCourse] = useState(null)
 
     useEffect(() => {
         auth().then((res) => {
             if(!res){ window.location.href="/login" }
-            else{ setUser(res) }
+            else{ 
+                setUser(res)
+                apiRequests.post("get/course/"+courseId, {token: res.token}).then((res) => { if (!res.error){ setCourse(Object(res.data))} })
+            }
         })
     }, [])
 
@@ -23,18 +28,21 @@ function CourseOverview(){
                 <div>
                     <Navbar />
                     <section className="section courseOverviewSection">
-                        <div className="row">
-                            <div className="col-md-3">
-                                <img alt="Course img"/>
+                        {course ? (
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <img style={{width: "100%"}} src={course.image} alt="Course img"/>
+                                </div>
+                                <div className="col-md-8">
+                                    <h1>{course.title}</h1>
+                                    <p>{course.description}</p>
+                                    <p>Lessons: {course.lessons.length}</p>
+                                    <p>Duration: {course.duration}h</p>
+                                    <p>Price: R${course.price}</p>
+                                    <Link to={"/checkout/"+courseId}><button className="getStartedBtn">Buy now!</button></Link>
+                                </div>
                             </div>
-                            <div className="col-md-8">
-                                <h1>Course Title ID: {courseId}</h1>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-                                <p>Duration: 50h</p>
-                                <p>Price: $100</p>
-                                <Link to={"/checkout/"+courseId}><button className="getStartedBtn">Buy now!</button></Link>
-                            </div>
-                        </div>
+                        ): (<h1 style={{textAlign: "center"}}>Course not found!</h1>)}
                     </section>
                 </div>
             ): (<div></div>)}

@@ -2,17 +2,22 @@ import { useState, useEffect } from 'react'
 import Navbar from '../components/navbar'
 import Course from '../components/course'
 import auth from '../utils/auth'
+import apiRequests from '../utils/apiRequests'
 
 function Home(){
 
     document.querySelector('title').innerText = "Home"
 
     const [user, setUser] = useState(null)
+    const [courses, setCourses] = useState([])
 
     useEffect(() => {
         auth().then((res) => {
             if(!res){ window.location.href="/login" }
-            else{ setUser(res) }
+            else{ 
+                setUser(res) 
+                apiRequests.post("get/courses", {token: res.token}).then((res) => { setCourses(Object(res.data)) })
+            }
         })
     }, [])
 
@@ -32,9 +37,9 @@ function Home(){
                         <hr />
                         <h2>Courses Library</h2>
                         <div className='coursesViewDiv row'>
-                            <Course title="Full JS Course" rating="4" price="R$29,00" url="/course/1" img="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.wixeq.com%2Fwp-content%2Fuploads%2F2017%2F12%2Fsem-imagem.jpg&f=1&nofb=1&ipt=9f5c2e525c640d0ca95c9b0b0fd8ad8e16aece0defeee2f64b965ef774b79b48&ipo=images" />
-                            <Course title="C The Best Programming Lang" rating="5" price="R$52,00" url="/course/2" img="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.wixeq.com%2Fwp-content%2Fuploads%2F2017%2F12%2Fsem-imagem.jpg&f=1&nofb=1&ipt=9f5c2e525c640d0ca95c9b0b0fd8ad8e16aece0defeee2f64b965ef774b79b48&ipo=images" />
-                            <Course title="Java The Worst" rating="2.5" price="R$10,50" url="/course/3" img="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.wixeq.com%2Fwp-content%2Fuploads%2F2017%2F12%2Fsem-imagem.jpg&f=1&nofb=1&ipt=9f5c2e525c640d0ca95c9b0b0fd8ad8e16aece0defeee2f64b965ef774b79b48&ipo=images" />
+                            {courses.length>0 ? (
+                                courses.map((course) => { return <Course title={course.title} rating={course.rating} price={"R$"+course.price} url={"/course/"+course.courseId} img={course.image} /> })
+                            ): (<p style={{textAlign: "center"}}>No courses yet ☹️</p>)}
                         </div>
                     </section>
                 </div>

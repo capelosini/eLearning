@@ -78,6 +78,26 @@ app.post("/edit/profile", (req, res) => {
     }
 })
 
+app.post("/get/courses", (req, res) => {
+    if (tokenValidation(req, res)){
+        Course.find().then(courses => {
+            res.send(JSON.stringify({error: false, data: courses}))
+        })
+    }
+})
+
+app.post("/get/course/:courseId", (req, res) => {
+    if (tokenValidation(req, res)){
+        Course.findOne({courseId: req.params.courseId}).then(course => {
+            if (course){
+                res.send(JSON.stringify({error: false, data: course}))
+            } else{
+                res.send(JSON.stringify({error: true, data: "Course not found!"}))
+            }
+        })
+    }
+})
+
 
 
 

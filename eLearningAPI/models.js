@@ -22,6 +22,7 @@ const lessonSchema = new mongoose.Schema({
 const courseSchema = new mongoose.Schema({
     title: String,
     description: String,
+    courseId: String,
     price: Number,
     image: String,
     instructorId: String,
