@@ -162,7 +162,7 @@ footer{
 }
 .course .courseImage{
   width: 75%;
-  height: 200px;
+  height: auto;
   border-radius: 5px;
 }
 

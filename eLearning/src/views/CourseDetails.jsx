@@ -30,15 +30,15 @@ function CourseOverview(){
                     <section className="section courseOverviewSection">
                         {course ? (
                             <div className="row">
-                                <div className="col-md-3">
-                                    <img style={{width: "100%"}} src={course.image} alt="Course img"/>
+                                <div className="col-sm-6">
+                                    <img style={{width: "100%", borderRadius: 5, border: "solid 2px black"}} src={course.image} alt="Course img"/>
                                 </div>
-                                <div className="col-md-8">
+                                <div className="col" style={{padding: 20}}>
                                     <h1>{course.title}</h1>
                                     <p>{course.description}</p>
-                                    <p>Lessons: {course.lessons.length}</p>
-                                    <p>Duration: {course.duration}h</p>
-                                    <p>Price: R${course.price}</p>
+                                    <p>Lessons: <strong>{course.lessons.length}</strong></p>
+                                    <p>Duration: <strong>{course.duration}h</strong></p>
+                                    <p>Price: <strong>R${course.price}</strong></p>
                                     <Link to={"/checkout/"+courseId}><button className="getStartedBtn">Buy now!</button></Link>
                                 </div>
                             </div>
