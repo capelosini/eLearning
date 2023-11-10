@@ -20,11 +20,12 @@ const {User, Course} = require('./models')
 
 function tokenValidation(req, res){
     const token = req.body.token
-    if(!token || !User.find({token: token})){
+    var user=User.find({token: token})
+    if(!token || !user){
         res.send(JSON.stringify({error: true, data: "Invalid Token!"}))
         return false
     }
-    return true
+    return user
 }
 
 app.get("/auth/:token", (req, res) => {
@@ -96,6 +97,18 @@ app.post("/get/course/:courseId", (req, res) => {
             }
         })
     }
+})
+
+app.post("/checkout", (req, res) => {
+    tokenValidation(req, res).then(user => {
+        if (user){
+            user=user[0]
+            user.boughtCoursesId.push(req.body.courseId)
+            User.findOneAndUpdate({token: req.body.token}, {boughtCoursesId: user.boughtCoursesId}, {new: true}).then(r => {
+                res.send(JSON.stringify({error: false, data: "Checkout Successful!"}))
+            })
+        }
+    })
 })
 
 

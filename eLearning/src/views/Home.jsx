@@ -35,7 +35,7 @@ function Home(){
                     </section>
                     <section className='section indexCoursesSection'>
                         <hr />
-                        <h2>Courses Library</h2>
+                        <h2>Available Courses</h2>
                         <div className='coursesViewDiv row'>
                             {courses.length>0 ? (
                                 courses.map((course) => { return <Course title={course.title} rating={course.rating} price={"R$"+course.price} url={"/course/"+course.courseId} img={course.image} /> })

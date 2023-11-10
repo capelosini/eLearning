@@ -88,9 +88,9 @@ function Account(){
                     </div>
                     <hr />
                     <div className="row" style={{textAlign: "center"}}>
-                        <h1 style={{padding: 20}}>My courses</h1>
+                        <h1 style={{padding: 20}}>Bought Courses</h1>
                         {userCourses.length>0 ? (
-                            userCourses.map((c) => { return <Course title={c.title} rating={c.rating} price={"R$"+c.price} url={"/course/"+c.courseId} img={c.image} /> })
+                            userCourses.map((c) => { return <Course title={c.title} rating={c.rating} price={"R$"+c.price} url={"/watch/"+c.courseId} img={c.image} /> })
                         ): (
                             <div>
                                 <p style={{textAlign: "center"}}>No bought courses yet ☹️</p>

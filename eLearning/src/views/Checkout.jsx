@@ -35,14 +35,19 @@ function Checkout(){
         var cpf = document.getElementById("cpf").value
         
         var error=false
-        await apiRequests.post("checkout", {cardOwner, cardNumber, cardCVV, cpf}).catch(async(err) => {
-            await swal("Error", "Course purchase failed!", "error")
+        var data=await apiRequests.post("checkout", {cardOwner, cardNumber, cardCVV, cpf, courseId, token: user.token}).catch(async(err) => {
+            await swal("Error", "Course purchase failed, try again later!", "error")
             error=true
         })
         if(error) return
-        await swal("Success", "Course purchased successfully!", "success")
-        window.location.href="/home"
-        return
+
+        if(data.error) {
+            await swal("Error", data.data, "error")
+            return
+        } else{
+            await swal("Success", "Course purchased successfully!", "success")
+            window.location.href="/home"
+        }
     }
 
 
