@@ -3,7 +3,6 @@ import { useState, useEffect } from "react"
 import auth from "../utils/auth"
 import apiRequests from "../utils/apiRequests"
 import Navbar from "../components/navbar"
-import { Link } from "react-router-dom"
 
 
 function Watch(){
@@ -32,6 +31,7 @@ function Watch(){
 
     function changeCourse(index){
         setLesson(course.lessons[index])
+        document.querySelector("video").src="http://"+window.location.hostname+":8080/video/"+courseId+"/"+lesson.video+"/"+user.token
     }
     
     return(
@@ -42,12 +42,13 @@ function Watch(){
                     {course ? (
                         <div>
                             <div className="row" style={{padding: 30, textAlign: "center"}}>
-                                <h1 className="col">Watch {course.title}</h1>
+                                <h1 className="col">{course.title}</h1>
                                 <p>{course.description}</p>
                             </div>
                             <div className="row" style={{padding: 30}}>
                                 <div className="col-lg-8" style={{textAlign: "center", marginBottom: 50}}>
-                                    <video controls width="100%" height="100%" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+                                    {/* <video controls width="100%" height="100%" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" /> */}
+                                    <video controls width="100%" height="100%" src={"http://"+window.location.hostname+":8080/video/"+courseId+"/"+lesson.video+"/"+user.token} style={{borderRadius: 10, border: "3px solid black"}} />
                                     <p>{lesson.description}</p>
                                 </div>
                                 <div className="col-lg-2">

@@ -5,6 +5,7 @@ const cp = require('cookie-parser')
 const bcrypt = require('bcrypt')
 const md5 = require('md5')
 const cors = require('cors')
+const fs = require('fs')
 
 const app = express()
 app.use(bp.urlencoded({extended: true}))
@@ -12,11 +13,18 @@ app.use(cp())
 app.use(cors())
 
 const PORT = process.env.PORT || 8080
+const videosPath = __dirname+"/lessons"
 
 mongoose.connect("mongodb://127.0.0.1/elearning")
 .then(() => { console.log("Database connected!") })
 
 const {User, Course} = require('./models')
+
+
+if (!fs.existsSync(videosPath)){
+    fs.mkdirSync(videosPath)
+}
+
 
 function tokenValidation(req, res){
     const token = req.body.token
@@ -107,6 +115,21 @@ app.post("/checkout", (req, res) => {
             User.findOneAndUpdate({token: req.body.token}, {boughtCoursesId: user.boughtCoursesId}, {new: true}).then(r => {
                 res.send(JSON.stringify({error: false, data: "Checkout Successful!"}))
             })
+        }
+    })
+})
+
+app.get("/video/:courseId/:videoName/:token", (req, res) => {
+    User.find({token: req.params.token}).then(user => {
+        if (user.length>0 && fs.existsSync(videosPath+"/"+req.params.videoName)){
+            if (user[0].boughtCoursesId.includes(req.params.courseId)){
+                const buffer = fs.readFileSync(videosPath+"/"+req.params.videoName)
+                res.send(buffer)
+            } else{
+                res.send(JSON.stringify({error: true, data: "You don't have access to this!"}))
+            }
+        }else{
+            res.send(JSON.stringify({error: true, data: "You don't have access to this!"}))
         }
     })
 })

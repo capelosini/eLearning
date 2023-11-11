@@ -8,7 +8,8 @@ async function get(url) {
 }
 
 async function post(url, data) {
-    const response = await axios.post(HOST + "/" + url, data, {headers: {'Content-Type': 'application/x-www-form-urlencoded', "Access-Control-Allow-Origin": "*", "Accept": "*"}})
+    var config={headers: {'Content-Type': 'application/x-www-form-urlencoded', "Access-Control-Allow-Origin": "*", "Accept": "*"}}
+    const response = await axios.post(HOST + "/" + url, data, config)
     return response.data
 }
 
