@@ -77,6 +77,9 @@ function Account(){
                                 <p>Name: {user.fullname}</p>
                                 <p>Email: {user.email}</p>
                                 <p>XP: {user.boughtCoursesId.length}</p>
+                                {
+                                    user.type==="teacher" ? (<Link className='btn btn-outline-success' to="/create">New Course</Link>): (<div></div>)
+                                }
                                 <button className='btn btn-outline-danger' onClick={logoutFunction}>Logout</button>
                             </div>
                         </div>

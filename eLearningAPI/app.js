@@ -111,6 +111,10 @@ app.post("/checkout", (req, res) => {
     tokenValidation(req, res).then(user => {
         if (user){
             user=user[0]
+            if (user.boughtCoursesId.includes(req.body.courseId)){
+                res.send(JSON.stringify({error: true, data: "You already bought this course!"}))
+                return
+            }
             user.boughtCoursesId.push(req.body.courseId)
             User.findOneAndUpdate({token: req.body.token}, {boughtCoursesId: user.boughtCoursesId}, {new: true}).then(r => {
                 res.send(JSON.stringify({error: false, data: "Checkout Successful!"}))

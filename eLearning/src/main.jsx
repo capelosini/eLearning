@@ -14,6 +14,7 @@ import CourseDetailsView from './views/CourseDetails'
 import CheckoutView from './views/Checkout'
 import AccountView from './views/Account'
 import WatchView from './views/Watch'
+import CreateView from './views/Create'
 
 const router = createBrowserRouter([
   {path: "/", element: <IndexView />},
@@ -23,7 +24,8 @@ const router = createBrowserRouter([
   {path: "/course/:courseId", element: <CourseDetailsView />},
   {path: "/checkout/:courseId", element: <CheckoutView />},
   {path: "/account", element: <AccountView />},
-  {path: "/watch/:courseId", element: <WatchView />}
+  {path: "/watch/:courseId", element: <WatchView />},
+  {path: "/create", element: <CreateView />}
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
