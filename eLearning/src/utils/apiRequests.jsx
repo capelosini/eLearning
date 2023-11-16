@@ -7,8 +7,11 @@ async function get(url) {
     return response.data
 }
 
-async function post(url, data) {
+async function post(url, data, file=false) {
     var config={headers: {'Content-Type': 'application/x-www-form-urlencoded', "Access-Control-Allow-Origin": "*", "Accept": "*"}}
+    if(file){
+        config.headers["Content-Type"] = "multipart/form-data"
+    }
     const response = await axios.post(HOST + "/" + url, data, config)
     return response.data
 }

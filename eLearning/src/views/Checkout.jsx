@@ -46,7 +46,7 @@ function Checkout(){
             return
         } else{
             await swal("Success", "Course purchased successfully!", "success")
-            window.location.href="/home"
+            window.location.href="/account"
         }
     }
 

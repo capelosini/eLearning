@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     token: String,
-    profileUrl: String
+    profileUrl: String,
+    userId: String
 })
 const User = mongoose.model("User", userSchema)
 

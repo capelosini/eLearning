@@ -4,8 +4,10 @@ const bp = require('body-parser')
 const cp = require('cookie-parser')
 const bcrypt = require('bcrypt')
 const md5 = require('md5')
+const sha256 = require('sha256')
 const cors = require('cors')
 const fs = require('fs')
+const multer = require('multer')
 
 const app = express()
 app.use(bp.urlencoded({extended: true}))
@@ -14,6 +16,7 @@ app.use(cors())
 
 const PORT = process.env.PORT || 8080
 const videosPath = __dirname+"/lessons"
+const upload = multer({storage: multer.memoryStorage()})
 
 mongoose.connect("mongodb://127.0.0.1/elearning")
 .then(() => { console.log("Database connected!") })
@@ -25,6 +28,13 @@ if (!fs.existsSync(videosPath)){
     fs.mkdirSync(videosPath)
 }
 
+function createId(bigger=false){
+    if(bigger){
+        return sha256(String(Math.random()*10)+String(Math.random()*10)+String(Math.random()*10)+String(Math.random()*10))
+    } else{
+        return md5(String(Math.random()*10)+String(Math.random()*10)+String(Math.random()*10)+String(Math.random()*10))
+    }
+}
 
 function tokenValidation(req, res){
     const token = req.body.token
@@ -65,8 +75,9 @@ app.post("/register", (req, res) => {
         var email=req.body.email
         var password=bcrypt.hashSync(req.body.password, 13)
         var type=req.body.role
-        var token = md5(String(Math.random()*10)+String(Math.random()*10))
-        var user = new User({fullname, email, password, type, boughtCoursesId: [], token, profileUrl: "/profiles/1.svg"})
+        var token = createId(true)
+        var userId = createId()
+        var user = new User({fullname, email, password, type, boughtCoursesId: [], token, profileUrl: "/profiles/1.svg", userId})
         user.save().then(() => {
             res.send(JSON.stringify({error: false, data: token}))
         })
@@ -117,7 +128,9 @@ app.post("/checkout", (req, res) => {
             }
             user.boughtCoursesId.push(req.body.courseId)
             User.findOneAndUpdate({token: req.body.token}, {boughtCoursesId: user.boughtCoursesId}, {new: true}).then(r => {
-                res.send(JSON.stringify({error: false, data: "Checkout Successful!"}))
+                Course.findOneAndUpdate({courseId: req.body.courseId}, {$inc: {studentsTotal: 1}}).then(course => {
+                    res.send(JSON.stringify({error: false, data: "Checkout Successful!"}))
+                })
             })
         }
     })
@@ -128,11 +141,40 @@ app.get("/video/:courseId/:videoName/:token", (req, res) => {
         if (user.length>0 && fs.existsSync(videosPath+"/"+req.params.videoName)){
             if (user[0].boughtCoursesId.includes(req.params.courseId)){
                 const buffer = fs.readFileSync(videosPath+"/"+req.params.videoName)
+                res.setHeader('Content-Type', 'video/mp4')
                 res.send(buffer)
             } else{
                 res.send(JSON.stringify({error: true, data: "You don't have access to this!"}))
             }
         }else{
+            res.send(JSON.stringify({error: true, data: "You don't have access to this!"}))
+        }
+    })
+})
+
+app.post("/create/course", upload.any(), (req, res) => {
+    tokenValidation(req, res).then(user => {
+        if (!user){ return }
+        if (user[0].type == "teacher"){
+            var courseInfo=JSON.parse(req.body.course)
+            var lessonsInfo=JSON.parse(req.body.lessons)
+            var courseTemp = {title: courseInfo.title, description: courseInfo.description, courseId: createId(), rating: 0, studentsTotal: 0, lessons: [], price: Number(courseInfo.price), image: courseInfo.coverImage, category: courseInfo.category, instructorId: user[0].userId}
+            var lessonsTemp=[]
+            lessonsInfo.forEach((lesson, index) => {
+                if (!req.files[index].mimetype == "video/mp4"){ return res.send(JSON.stringify({error: true, data: "We only accept 'mp4' files!"})) }
+                var filename=createId()+".mp4"
+                fs.writeFileSync(videosPath+"/"+filename, req.files[index].buffer)
+                lessonsTemp.push({title: lesson.title, description: lesson.description, video: filename, duration: req.files[index].size})
+                courseTemp.duration=req.files[index].size
+                if (index == lessonsInfo.length-1){
+                    courseTemp.lessons=lessonsTemp
+                    var course = new Course(courseTemp)
+                    course.save().then(() => {
+                        res.send(JSON.stringify({error: false, data: "Course created successfully!"}))
+                    })
+                }
+            })
+        }  else if (user[0].type == "student"){
             res.send(JSON.stringify({error: true, data: "You don't have access to this!"}))
         }
     })
