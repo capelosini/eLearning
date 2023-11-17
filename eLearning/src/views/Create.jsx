@@ -47,6 +47,12 @@ function Create(){
     function handleSubmit(e){
         e.preventDefault()
         if (lessons.length > 0){
+
+            if (document.getElementById("imageCover").files[0].size > 1000000){
+                swal("Error", "Cover image too large! limit: 1MB", "error")
+                return
+            }
+
             var formData = new FormData()
             formData.append("course", JSON.stringify({title: document.getElementById("title").value, description: document.getElementById("description").value, price: document.getElementById("price").value, coverImage: tempCoverImage, category: document.getElementById("category").value}))
             formData.append("lessons", JSON.stringify(lessons))

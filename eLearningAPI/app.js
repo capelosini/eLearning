@@ -168,9 +168,13 @@ app.post("/create/course", upload.any(), (req, res) => {
                 courseTemp.duration=req.files[index].size
                 if (index == lessonsInfo.length-1){
                     courseTemp.lessons=lessonsTemp
-                    var course = new Course(courseTemp)
-                    course.save().then(() => {
-                        res.send(JSON.stringify({error: false, data: "Course created successfully!"}))
+
+                    user[0].boughtCoursesId.push(courseTemp.courseId)
+                    User.findOneAndUpdate({token: user[0].token}, {boughtCoursesId: user[0].boughtCoursesId}, {new: true}).then(up => {
+                        var course = new Course(courseTemp)
+                        course.save().then(() => {
+                            res.send(JSON.stringify({error: false, data: "Course created successfully!"}))
+                        })
                     })
                 }
             })
@@ -178,6 +182,18 @@ app.post("/create/course", upload.any(), (req, res) => {
             res.send(JSON.stringify({error: true, data: "You don't have access to this!"}))
         }
     })
+})
+
+app.get("/public/user/:userId", (req, res) => {
+    User.findOne({userId: req.params.userId}).then(user => {
+        if (user){
+            user.token=""
+            user.password=""
+            res.send(JSON.stringify({error: false, data: user}))
+        } else{
+            res.send(JSON.stringify({error: true, data: "User not found!"}))
+        }
+    }) 
 })
 
 
