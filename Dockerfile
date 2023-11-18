@@ -28,8 +28,8 @@ COPY ./eLearning/dist/* ./
 
 # Configure apache
 RUN a2enmod mime
-RUN echo "RewriteEngine On\nRewriteBase /\nRewriteRule ^index\.html$ - [L]\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_FILENAME} !-d\nRewriteRule . /index.html [L]" >> ./.htaccess
-RUN echo "AddType application/javascript .js" >> /etc/apache2/apache2.conf
+RUN echo "Options -MultiViews\nRewriteEngine On\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteRule ^ index.html [QSA,L]" >> ./.htaccess
+RUN echo "<Directory /var/www/html> \nOptions Indexes FollowSymLinks\nAllowOverride All\nRequire all granted\n</Directory>" >> /etc/apache2/apache2.conf
 
 # Expose for apache
 EXPOSE 80
