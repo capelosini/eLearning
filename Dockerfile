@@ -1,4 +1,12 @@
-FROM node:21
+FROM mongo:latest
+
+# Install nodejs and update packages
+RUN apt update -y && apt install -y ca-certificates curl gnupg && mkdir -p /etc/apt/keyrings && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+RUN apt update -y && apt install -y nodejs
+
+# Update npm
+RUN npm install -g npm
 
 # Change the workdir to API project folder
 WORKDIR /eLearningAPI
@@ -12,27 +20,17 @@ RUN npm install
 # Expose the default ports for API
 EXPOSE 8080
 
-# Run api server
-CMD node app.js
+# Set the frontend workdir
+WORKDIR /eLearning
 
-FROM mongo:latest
+# Copy your files into app directory
+COPY ./eLearning/* ./
 
-# Install Apache server and curl
-RUN apt-get update && apt-get install -y apache2
+# Install dependencies
+RUN npm install
 
-# Create a directory to store files for Apache
-WORKDIR /var/www/html
+# Expose for app
+EXPOSE 5173
 
-# Copy your files into the Apache directory
-COPY ./eLearning/dist/* ./
-
-# Configure apache
-RUN a2enmod mime
-RUN echo "Options -MultiViews\nRewriteEngine On\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteRule ^ index.html [QSA,L]" >> ./.htaccess
-RUN echo "<Directory /var/www/html> \nOptions Indexes FollowSymLinks\nAllowOverride All\nRequire all granted\n</Directory>" >> /etc/apache2/apache2.conf
-
-# Expose for apache
-EXPOSE 80
-
-# Start MongoDB, Apache and API when the container starts
-CMD mongod --fork --logpath /var/log/mongod.log && apache2ctl -D FOREGROUND
+# Start MongoDB, Frontend and API when the container starts
+CMD mongod --fork --logpath /var/log/mongod.log && nohup node /eLearningAPI/app.js & npm run dev
