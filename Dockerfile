@@ -12,7 +12,7 @@ RUN npm install -g npm
 WORKDIR /eLearningAPI
 
 # Copy the api folder to root
-COPY ./eLearningAPI/* ./
+COPY ./eLearningAPI/ ./
 
 # Install API dependencies
 RUN npm install
@@ -24,7 +24,7 @@ EXPOSE 8080
 WORKDIR /eLearning
 
 # Copy your files into app directory
-COPY ./eLearning/* ./
+COPY ./eLearning/ ./
 
 # Install dependencies
 RUN npm install

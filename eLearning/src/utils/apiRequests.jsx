@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const HOST = "http://localhost:8080"
+const HOST = window.location.origin.split(":")[0] + ":" + window.location.origin.split(":")[1] +":8080"
 
 async function get(url) {
     const response = await axios.get(HOST + "/" + url)
