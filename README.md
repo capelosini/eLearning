@@ -24,13 +24,15 @@ This is a project inspired in course platforms such as udemy that you can:
 ## Important commands (run dev local)
 
 Run frontend react app
-```js
+```sh
+cd eLearning
 npm install
 npm run dev
 ```
 
 Run backend API
-```js
+```sh
+cd eLearningAPI
 npm install
 node app.js
 ```
@@ -39,6 +41,16 @@ Run mongodb daemon with docker
 ```sh
 docker run --network host mongo:latest
 ```
+OR
+
+### Docker
+
+Run all the project as a container with docker (Redirecting the frontend port 5173 --> 80)
+```sh
+docker build -t elearning .
+docker run -p 80:5173 -p 8080:8080 -it --name elearning elearning:latest
+```
+
 <hr></hr>
 
 ![devstatus](https://img.shields.io/badge/Status-dev-purple?style=for-the-badge)
