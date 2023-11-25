@@ -15,8 +15,10 @@ import CheckoutView from './views/Checkout'
 import AccountView from './views/Account'
 import WatchView from './views/Watch'
 import CreateView from './views/Create'
+import NotFoundView from './views/NotFound'
 
 const router = createBrowserRouter([
+  {path: "*", element: <NotFoundView />},
   {path: "/", element: <IndexView />},
   {path: "/login", element: <LoginView />},
   {path: "/register", element: <RegisterView />},
