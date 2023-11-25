@@ -1,7 +1,7 @@
+import { useEffect } from 'react'
 import { Link } from "react-router-dom"
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import React from 'react'
 
 function NotFound(){
 
@@ -37,18 +37,18 @@ function NotFound(){
         animate()
     }
 
-    window.addEventListener("load", addSpace)
+    useEffect(() => {
+        addSpace()
+    }, [])
 
     return(
-        <React.StrictMode>
-            <div id="mainContainer" style={{textAlign: "center", width: "100vw", height: "100vh", color: "#fff"}}>
-                <div style={{top: "40%", left: "45%", position: "absolute"}}>
-                    <h1>404</h1>
-                    <p>Page not found!</p>
-                    <Link to="/" className="btn btn-outline-danger">Back</Link>
-                </div>
+        <div id="mainContainer" className='center' style={{textAlign: "center", width: "100vw", height: "100vh", color: "#fff"}}>
+            <div style={{position: "absolute"}}>
+                <h1>404</h1>
+                <p>Page not found!</p>
+                <Link to="/" className="btn btn-outline-danger">Back</Link>
             </div>
-        </React.StrictMode>
+        </div>
     )
 }
 
