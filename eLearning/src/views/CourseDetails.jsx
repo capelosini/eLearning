@@ -35,7 +35,8 @@ function CourseOverview(){
                                 </div>
                                 <div className="col" style={{padding: 20}}>
                                     <h1>{course.title}</h1>
-                                    <p>{course.description}</p>
+                                    <h4>{course.description}</h4>
+                                    <br />
                                     <p>Lessons: <strong>{course.lessons.length}</strong></p>
                                     <p>Duration: <strong>{course.duration}h</strong></p>
                                     <p>Price: <strong>R${course.price}</strong></p>

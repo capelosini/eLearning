@@ -67,14 +67,34 @@ function Checkout(){
                                     </div>
                                     <div className="col">
                                         <h3 style={{padding: 20}}>Payment Info</h3>
-                                        <label className="formLabel">Card Owner</label>
+                                        <div className="row">
+                                            <div className="col">
+                                                <label className="formLabel">Card Owner</label>
+                                                <input className="formInput" type="text" id="cardOwner" placeholder="John Doe" />
+                                            </div>
+                                            <div className="col">
+                                                <label className="formLabel">Card Number</label>
+                                                <input className="formInput" type="text" id="cardNumber" placeholder="1234123412341234" />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col">
+                                                <label className="formLabel">CVV</label>
+                                                <input className="formInput" type="text" id="cardCVV" placeholder="123" />
+                                            </div>
+                                            <div className="col">
+                                                <label className="formLabel">CPF</label>
+                                                <input className="formInput" type="text" id="cpf" placeholder="12345678911" />
+                                            </div>
+                                        </div>
+                                        {/* <label className="formLabel">Card Owner</label>
                                         <input className="formInput" type="text" id="cardOwner" />
                                         <label className="formLabel">Card Number</label>
                                         <input className="formInput" type="text" id="cardNumber" />
                                         <label className="formLabel">CVV</label>
                                         <input className="formInput" type="text" id="cardCVV" />
                                         <label className="formLabel">CPF</label>
-                                        <input className="formInput" type="text" id="cpf" />
+                                        <input className="formInput" type="text" id="cpf" /> */}
                                         <div className="row">
                                             <div className="col">
                                                 <button type="submit" className="btn btn-lg btn-outline-success">Buy</button>

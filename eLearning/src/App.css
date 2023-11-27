@@ -131,12 +131,18 @@ footer{
   animation-duration: 1s;
 }
 
+.homeHeadSection h1{
+  font-weight: bold;
+}
+
 .course{
   transition-duration: 0.5s;
   padding: 30px;
   text-align: center;
   background-color: var(--raisin-black);
   color: white;
+  box-shadow: 1px 1px 10px black;
+  border: solid 3px gray;
   border-radius: 5px;
   width: 350px;
   height: auto;
@@ -145,6 +151,7 @@ footer{
 .course:hover{
   transition-duration: 0.5s;
   width: 360px;
+  box-shadow: 20px 20px 0px black;
 }
 .course .courseTitle,.coursePrice,.courseRating{
   display: block;
@@ -162,7 +169,7 @@ footer{
 }
 .course .courseImage{
   width: 75%;
-  height: auto;
+  height: 150px;
   border-radius: 5px;
 }
 
