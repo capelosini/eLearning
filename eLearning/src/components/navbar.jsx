@@ -24,7 +24,7 @@ function navbar(){
                     <div className="collapse navbar-collapse" id="navbarContent">
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item ms-auto"><Link to="/home" className="nav-link">Home</Link></li>
-                            <li className="nav-item ms-auto"><Link to="/account" className="nav-link">My Account</Link></li>
+                            <li className="nav-item ms-auto"><Link to="/account" className="nav-link"><img width="40px" src={user.profileUrl}/></Link></li>
                         </ul>
                     </div>
                 ): (<div></div>)}
