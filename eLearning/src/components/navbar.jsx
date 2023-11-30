@@ -14,7 +14,7 @@ function navbar(){
     }, [])
 
     return(
-        <nav className="navbar navbar-dark navbar-expand-lg bg-dark">
+        <nav data-bs-theme="dark" className="navbar navbar-expand-lg bg-dark">
             <div className="container-fluid">
                 <Link to="/"><img className="navbar-brand" src={logoLight}/></Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
